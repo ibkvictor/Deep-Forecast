@@ -1,0 +1,24 @@
+{"level":"info","time":"2022-03-25T11:15:03Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2022-03-25T11:15:03Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2022-03-25T11:15:05Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2022-03-25T11:15:05Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2022-03-25T11:15:08Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2022-03-25T11:15:08Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2022-03-25T11:15:12Z","message":"Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps"}
+{"level":"info","time":"2022-03-25T11:15:12Z","message":"Requesting new quick Tunnel on trycloudflare.com..."}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"+--------------------------------------------------------------------------------------------+"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"|  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"|  https://qld-units-flesh-optimization.trycloudflare.com                                    |"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"+--------------------------------------------------------------------------------------------+"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Version 2022.3.3"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"GOOS: linux, GOVersion: go1.17.5, GoArch: amd64"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Settings: map[logfile:./cloudflared.log metrics:localhost:45678 protocol:quic url:ssh://localhost:22]"}
+{"level":"info","autoupdateFreq":86400000,"time":"2022-03-25T11:15:16Z","message":"Autoupdate frequency is set"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Generated Connector ID: c88923aa-1685-4729-96e3-f18ea2127bbc"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Initial protocol quic"}
+{"level":"info","time":"2022-03-25T11:15:16Z","message":"Starting metrics server on 127.0.0.1:45678/metrics"}
+{"level":"info","connIndex":0,"location":"ATL","time":"2022-03-25T11:15:16Z","message":"Connection 414c50ba-9215-49fd-806f-db0af053a633 registered"}
+{"level":"info","connIndex":1,"location":"IAD","time":"2022-03-25T11:15:17Z","message":"Connection 16e10990-ff1b-422c-ad96-639da389ba6a registered"}
+{"level":"info","connIndex":2,"location":"ATL","time":"2022-03-25T11:15:17Z","message":"Connection 0773009b-b7a9-46f8-b492-dc851cd5e5b7 registered"}
+{"level":"info","connIndex":3,"location":"IAD","time":"2022-03-25T11:15:18Z","message":"Connection d014857d-a4f0-416a-a45d-fdddbbf5522d registered"}

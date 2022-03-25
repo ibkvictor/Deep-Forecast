@@ -4,13 +4,14 @@ import time
 import csv
 import sys
 import tensorflow as tf
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Dropout, Flatten
-from keras.layers import Convolution2D
-from keras.layers.recurrent import LSTM, SimpleRNN, GRU
-import keras as keras
+import tensorflow.keras as keras
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
+#from tensorflow.keras.layers import Convolution2D
+from tensorflow.keras.layers import LSTM, SimpleRNN, GRU
+#import keras as keras
 np.random.seed(1234)
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 class multiLSTM:
     def __init__(self):
@@ -18,7 +19,7 @@ class multiLSTM:
         self.inOutVecDim = 57  # number of stations
         self.lstmModels = [ None for _ in range(6)]
         self.xTest, self.yTest = None, None
-        file_dataset = '/home/path/to/dataset/file'
+        file_dataset = '/content/drive/MyDrive/Colab Notebooks/energy_research/deep_forecast/MS_winds.dat'
         with open(file_dataset) as f:
             data = csv.reader(f, delimiter=",")
             winds = []
@@ -87,11 +88,13 @@ class multiLSTM:
         model = Sequential()
         in_nodes = out_nodes = self.inOutVecDim
         layers = [in_nodes, 57*2, 57, 32, out_nodes]
-        model.add(LSTM(input_dim=layers[0],output_dim=layers[1],
-            return_sequences=False))
+        # model.add(LSTM(input_dim=layers[0],output_dim=layers[1],
+        #     return_sequences=False))
+        model.add(LSTM(units=layers[1],
+             return_sequences=False))
     
         model.add(Dense(
-            output_dim=layers[4]))
+            units=layers[4]))
         model.add(Activation(self.activation))
     
         optimizer = keras.optimizers.RMSprop(lr=0.001)
@@ -102,11 +105,13 @@ class multiLSTM:
     def buildModelLSTM_2(self):
         model = Sequential()
         layers = [self.inOutVecDim, 10 , 57 * 2, 32, self.inOutVecDim]
-        model.add(LSTM(input_dim=layers[0],output_dim=layers[1],
-            return_sequences=False))
+        # model.add(LSTM(input_dim=layers[0],output_dim=layers[1],
+        #     return_sequences=False))
+        model.add(LSTM(units=layers[1],
+            return_sequences=False, input_dim=layers[0],))
 
         model.add(Dense(
-            output_dim=layers[4]))
+            units=layers[4]))
 
         model.add(Activation(self.activation))
 
@@ -119,11 +124,13 @@ class multiLSTM:
         model = Sequential()
 
         layers = [self.inOutVecDim, 57, 57 * 2, 32, self.inOutVecDim]
-        model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
-            return_sequences=False))
+        # model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
+        #     return_sequences=False))
+        model.add(LSTM(units=layers[1],
+            return_sequences=False, input_dim=layers[0],))
 
         model.add(Dense(
-            output_dim=layers[4]))
+            units=layers[4]))
 
         model.add(Activation(self.activation))
 
@@ -136,10 +143,12 @@ class multiLSTM:
         model = Sequential()
 
         layers = [self.inOutVecDim, 57, 57 * 2, 57, self.inOutVecDim]
-        model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
-            return_sequences=True))
+        # model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
+        #     return_sequences=True))
+        model.add(LSTM(units=layers[1],
+            return_sequences=False, input_dim=layers[0],))
 
-        model.add(LSTM(layers[2],
+        model.add(LSTM(units = layers[2],
             return_sequences=False))
 
         model.add(Dense(output_dim=layers[4]))
@@ -155,10 +164,12 @@ class multiLSTM:
         model = Sequential()
 
         layers = [self.inOutVecDim, 30, 57 * 2, 57, self.inOutVecDim]
-        model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
-            return_sequences=False))
+        # model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
+        #     return_sequences=False))
+        model.add(LSTM(units=layers[1],
+            return_sequences=False, input_dim=layers[0],))
 
-        model.add(Dense(output_dim=layers[4]))
+        model.add(Dense(units=layers[4]))
 
         model.add(Activation(self.activation))
 
@@ -170,11 +181,13 @@ class multiLSTM:
     def buildModelLSTM_6(self):
         model = Sequential()
         layers = [self.inOutVecDim, 57*2, 57 * 2, 57, self.inOutVecDim]
-        model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
-        return_sequences=True))
+        # model.add(LSTM(input_dim=layers[0], output_dim=layers[1],
+        # return_sequences=True))
+        model.add(LSTM(units=layers[1],
+            return_sequences=False, input_dim=layers[0],))
 
 
-        model.add(LSTM(layers[2],
+        model.add(LSTM(units = layers[2],
             return_sequences=False))
 
         model.add(Dense(output_dim=layers[4]))
@@ -204,7 +217,7 @@ class multiLSTM:
         # train first LSTM with inputHorizon number of real input values
 
         lstmModel = self.buildModelLSTM(lstmModelNum)
-        lstmModel.fit(xTrain, yTrain, batch_size=self.batchSize, nb_epoch=self.epochs[lstmModelNum-1], validation_split=self.validation_split)
+        lstmModel.fit(xTrain, yTrain, batch_size=self.batchSize, epochs=self.epochs[lstmModelNum-1], validation_split=self.validation_split)
         return lstmModel
 
     def test(self):
@@ -243,7 +256,7 @@ class multiLSTM:
         denormalPredicted = self.denormalize(self.predicted[:, station])
 
         mae, rmse, nrmse_maxMin, nrmse_mean  = self.errorMeasures(denormalYTest, denormalPredicted)
-        print 'station %s : MAE = %7.7s   RMSE = %7.7s    nrmse_maxMin = %7.7s   nrmse_mean = %7.7s'%(station+1, mae, rmse, nrmse_maxMin, nrmse_mean )
+        print('station %s : MAE = %7.7s   RMSE = %7.7s    nrmse_maxMin = %7.7s   nrmse_mean = %7.7s'%(station+1, mae, rmse, nrmse_maxMin, nrmse_mean ))
 
         if visualise:
             if ax is None :
@@ -267,7 +280,7 @@ class multiLSTM:
             staInd += 1
         plt.xticks([0, 100, 200, 300])#, rotation=45)
         errMean = maeRmse.mean(axis=0)
-        print maeRmse.mean(axis=0)
+        print(maeRmse.mean(axis=0))
 
         filename = 'pgf/finalEpoch'
         plt.savefig('{}.pgf'.format(filename))
@@ -279,16 +292,16 @@ class multiLSTM:
     def run(self):
         #  training
         xTrain, yTrain = self.loadData_1()
-        print ' Training LSTM 1 ...'
+        print(' Training LSTM 1 ...')
         self.lstmModels[0] = self.trainLSTM(xTrain, yTrain, 1)
 
         for modelInd in range(1,6):
             xTrain, yTrain = self.loadData(xTrain, yTrain, self.lstmModels[modelInd-1])
-            print ' Training LSTM %s ...' % (modelInd+1)
+            print(' Training LSTM %s ...' % (modelInd+1))
             self.lstmModels[modelInd] = self.trainLSTM(xTrain, yTrain, modelInd+1)
 
         # testing
-        print '...... TESTING  ...'
+        print('...... TESTING  ...')
         self.test()
 
         self.drawGraphAllStations()
