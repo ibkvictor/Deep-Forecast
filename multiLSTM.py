@@ -69,9 +69,11 @@ class multiLSTM:
 
     def loadData(self, preXTrain, preYTrain, model): # xtrain and ytrain from loadData_1
         # for lstm2 output: xtrain ytrain
+        print("overcame")
         xTrain, yTrain = np.ones_like(preXTrain), np.zeros_like(preYTrain)
-  
+    
         for ind in range(len(preXTrain) - self.inputHorizon -1):
+            print(ind, " overcame")
             tempInput = preXTrain[ind]
             temp_shape = tempInput.shape
             tempInput = np.reshape(tempInput, (1,temp_shape[0],temp_shape[1]))
@@ -296,6 +298,7 @@ class multiLSTM:
         self.lstmModels[0] = self.trainLSTM(xTrain, yTrain, 1)
 
         for modelInd in range(1,6):
+            self.lstmModels[modelInd] = self.trainLSTM(xTrain, yTrain, modelInd + 1)
             xTrain, yTrain = self.loadData(xTrain, yTrain, self.lstmModels[modelInd-1])
             print(' Training LSTM %s ...' % (modelInd+1))
             self.lstmModels[modelInd] = self.trainLSTM(xTrain, yTrain, modelInd+1)
@@ -306,6 +309,6 @@ class multiLSTM:
 
         self.drawGraphAllStations()
 
-DeepForecaste = multiLSTM()
-DeepForecaste.run()
+# DeepForecaste = multiLSTM()
+# DeepForecaste.run()
 
